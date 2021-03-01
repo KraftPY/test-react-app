@@ -1,0 +1,7 @@
+.desc {
+  width: 100%;
+  height: 15rem;
+  overflow: auto;
+  text-align: justify;
+  padding-right: 1rem;
+}
