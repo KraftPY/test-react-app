@@ -1,5 +1,5 @@
 import React from 'react'
-import {  Menu } from 'antd'
+import { Menu } from 'antd'
 import { useHistory } from 'react-router-dom'
 
 const menu = [
@@ -8,11 +8,11 @@ const menu = [
   { name: 'Create report', path: '/create-report'},
 ]
 
-function Navbar() {
+export default function Navbar() {
   const history = useHistory()
 
   function eventClick({ key }) {
-    const { path } = menu[key - 1]
+    const path = menu[key - 1].path
     history.push(path)
   }
 
@@ -32,5 +32,3 @@ function Navbar() {
     </Menu>
   )
 }
-
-export default Navbar

@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from 'react'
-import ReportsList from '../components/ReportsList/ReporstList'
-import Pag from '../components/Pagination/Pagination'
-import Filter from '../components/Filter/Filter'
-import { getReports } from "../api"
+import ReportsList from './ReportsList/ReporstList'
+import Pag from './Pagination/Pagination'
+import Filter from './Filter/Filter'
 
-class Reports extends Component {
+class SavedReports extends Component {
   state = {
     reports: [],
     filteredReports: [],
@@ -12,8 +11,8 @@ class Reports extends Component {
     current: 1,
   }
 
-  async componentDidMount() {
-    const data = await getReports()
+  componentDidMount() {
+    const data = JSON.parse(localStorage.getItem('savedReports')) || []
     const tagsTemp = this.getTags(data)
     this.setState({
       reports: data,
@@ -43,24 +42,12 @@ class Reports extends Component {
     this.setState({ current })
   }
 
-  saveReport = report => {
-    let saveReports = JSON.parse(localStorage.getItem('savedReports')) || []
-    if (!saveReports.find( r => r.id === report.id)) {
-      saveReports.push(report)
-      localStorage.setItem('savedReports', JSON.stringify(saveReports))
-    }
-  }
-
   render() {
-    const { state: { tags, filteredReports, current }, changeFilter, changeCurrentPage, saveReport } = this
+    const { state: { tags, filteredReports, current }, changeFilter, changeCurrentPage } = this
     return (
       <Fragment>
         <Filter tags={ tags } event={ changeFilter }/>
-        <ReportsList
-          arrReports={ filteredReports }
-          current={ current }
-          saveRep={ saveReport }
-        />
+        <ReportsList arrReports={ filteredReports } current={ current }/>
         <Pag 
           total={ filteredReports.length }
           changeCurrent={ changeCurrentPage }
@@ -69,7 +56,6 @@ class Reports extends Component {
       </Fragment>
     )
   }
-  
 }
 
-export default Reports
+export default SavedReports
