@@ -2,10 +2,10 @@ import React from 'react'
 import { Form, Input, Button } from 'antd';
 const layout = {
   labelCol: {
-    span: 8,
+    span: 2,
   },
   wrapperCol: {
-    span: 16,
+    span: 5,
   },
 };
 /* eslint-disable no-template-curly-in-string */
@@ -21,10 +21,19 @@ function CreateReport() {
   };
 
   return (
-    <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} style={{ marginTop: '4%'}}>
+    <Form
+      {...layout}
+      name="nest-messages"
+      onFinish={onFinish}
+      validateMessages={validateMessages}
+      style={{ marginTop: '4%', border: '1px solid red'}}
+      labelAlign="left"
+    >
       <Form.Item
+        style={{border: '1px solid green'}}
         name={['report', 'title']}
         label="Title"
+        justify="center"
         rules={[
           {
             required: true,
@@ -34,8 +43,10 @@ function CreateReport() {
         <Input />
       </Form.Item>
       <Form.Item
+        style={{border: '1px solid green'}}
         name={['report', 'tags']}
         label="Tags"
+        justify="center"
         rules={[
           {
             required: true,
@@ -45,8 +56,10 @@ function CreateReport() {
         <Input />
       </Form.Item>
       <Form.Item 
+        style={{border: '1px solid green'}}
         name={['report', 'description']}
         label="Description"
+        justify="center"
         rules={[
           {
             required: true,
@@ -55,8 +68,8 @@ function CreateReport() {
         
         <Input.TextArea />
       </Form.Item>
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-        <Button type="primary" htmlType="submit">
+      <Form.Item style={{border: '1px solid green', padding: 0}} justify="end">
+        <Button type="primary" htmlType="submit" style={{border: '1px solid blue', margin: 0}}>
           Submit
         </Button>
       </Form.Item>
