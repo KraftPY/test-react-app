@@ -32,6 +32,7 @@ function CreateReport() {
     let isNewId = false
     do {
       id++
+      // eslint-disable-next-line
       isNewId = !saveReports.find( r => r.id === id)
     } while (!isNewId)
 
