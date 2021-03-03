@@ -1,11 +1,15 @@
 import React from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Typography  } from 'antd'
+
+const { Title } = Typography
 const layout = {
   labelCol: {
-    span: 2,
+    xl: 2,
+    md: 3,
   },
   wrapperCol: {
-    span: 5,
+    xl: 5,
+    md: 7,
   },
 };
 /* eslint-disable no-template-curly-in-string */
@@ -13,11 +17,28 @@ const layout = {
 const validateMessages = {
   required: '${label} is required!',
 };
+
+
 /* eslint-enable no-template-curly-in-string */
 
 function CreateReport() {
-  const onFinish = (values) => {
-    console.log(values);
+  const [form] = Form.useForm()
+
+  const onFinish = ({ title, tags, description }) => {
+    let parseTags = tags.replace(/ +/g, ' ').trim().split(/,|\s/)
+    parseTags = parseTags.filter( t => t !== '')
+    let saveReports = JSON.parse(localStorage.getItem('savedReports')) || []
+    let id = 11
+    let isNewId = false
+    do {
+      id++
+      isNewId = !saveReports.find( r => r.id === id)
+    } while (!isNewId)
+
+    saveReports.push({ id, title, tags: parseTags, description})
+    localStorage.setItem('savedReports', JSON.stringify(saveReports))
+    
+    form.resetFields();
   };
 
   return (
@@ -26,12 +47,13 @@ function CreateReport() {
       name="nest-messages"
       onFinish={onFinish}
       validateMessages={validateMessages}
-      style={{ marginTop: '4%', border: '1px solid red'}}
       labelAlign="left"
+      align="center"
+      form={form}
     >
+      <Title level={3} style={{ margin: '2% 0' }}>Create report</Title>
       <Form.Item
-        style={{border: '1px solid green'}}
-        name={['report', 'title']}
+        name={['title']}
         label="Title"
         justify="center"
         rules={[
@@ -43,8 +65,7 @@ function CreateReport() {
         <Input />
       </Form.Item>
       <Form.Item
-        style={{border: '1px solid green'}}
-        name={['report', 'tags']}
+        name={['tags']}
         label="Tags"
         justify="center"
         rules={[
@@ -56,8 +77,7 @@ function CreateReport() {
         <Input />
       </Form.Item>
       <Form.Item 
-        style={{border: '1px solid green'}}
-        name={['report', 'description']}
+        name={[ 'description']}
         label="Description"
         justify="center"
         rules={[
@@ -68,11 +88,9 @@ function CreateReport() {
         
         <Input.TextArea />
       </Form.Item>
-      <Form.Item style={{border: '1px solid green', padding: 0}} justify="end">
-        <Button type="primary" htmlType="submit" style={{border: '1px solid blue', margin: 0}}>
+        <Button type="primary" htmlType="submit">
           Submit
         </Button>
-      </Form.Item>
     </Form>
   );
 };
