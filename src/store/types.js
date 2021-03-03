@@ -1,0 +1,1 @@
+export const REPORTS_FROM_API = 'REPORTS_FROM_API'
