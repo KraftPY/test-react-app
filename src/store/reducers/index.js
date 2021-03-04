@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { reportsReducer } from './reportsReducer'
 
-export const rootReducer = combineReducers({
+export default combineReducers({
   reports: reportsReducer
 })

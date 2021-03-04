@@ -25,9 +25,9 @@ export default function Navbar() {
       style={{ paddingLeft: '10%' }}
     >
       { menu.map( ({name }, i) => {
-          return (
-              <Menu.Item key={i + 1}>{ name }</Menu.Item>
-          )
+        return (
+          <Menu.Item key={i + 1}>{ name }</Menu.Item>
+        )
       })}
     </Menu>
   )

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Input, Button, Typography  } from 'antd'
+import { useDispatch, useSelector } from 'react-redux';
 
 const { Title } = Typography
 const layout = {
@@ -22,23 +23,24 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 function CreateReport() {
+  const { reports, savedReports } = useSelector(state => state.reports)
+  const dispatch = useDispatch();
   const [form] = Form.useForm()
 
   const onFinish = ({ title, tags, description }) => {
     let parseTags = tags.replace(/ +/g, ' ').trim().split(/,|\s/)
     parseTags = parseTags.filter( t => t !== '')
-    let saveReports = JSON.parse(localStorage.getItem('savedReports')) || []
-    let id = 11
+    let id = 0
     let isNewId = false
     do {
       id++
       // eslint-disable-next-line
-      isNewId = !saveReports.find( r => r.id === id)
+      isNewId = !savedReports.find( r => r.id === id)
+      isNewId = !reports.find( r => r.id === id)
     } while (!isNewId)
+    const newReport = { id, title, tags: parseTags, description}
 
-    saveReports.push({ id, title, tags: parseTags, description})
-    localStorage.setItem('savedReports', JSON.stringify(saveReports))
-    
+    dispatch({ type: 'SAVE_REPORT', payload: newReport })
     form.resetFields();
   };
 

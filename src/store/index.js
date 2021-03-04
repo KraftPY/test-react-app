@@ -1,16 +1,14 @@
-import { compose, createStore } from 'redux'
-import { Reducer } from './reducer'
-
-const preloadedState = {
-  reports: [],
-  tags: [],
-  current: 1,
-  savedReports: JSON.parse(localStorage.getItem('savedReports')) || []
-}
+import { compose, createStore, applyMiddleware } from 'redux'
+import rootReducer from './reducers'
+import thunk from 'redux-thunk'
 
 
-const store = createStore(Reducer, preloadedState, compose(
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-))
+const store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+);
 
-export default store
+export default store;
