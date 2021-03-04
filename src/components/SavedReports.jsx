@@ -1,61 +1,32 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import ReportsList from './ReportsList/ReporstList'
 import Pag from './Pagination/Pagination'
 import Filter from './Filter/Filter'
+import { useSelector, useDispatch } from 'react-redux'
 
-class SavedReports extends Component {
-  state = {
-    reports: [],
-    filteredReports: [],
-    tags: [],
-    current: 1,
+function SavedReports() {
+  const { sFilteredReports, sTags, current } = useSelector(state => state.reports)
+  const dispatch = useDispatch()
+
+  const changeFilter = (val) => {
+    dispatch({ type: 'FILTER_REPORTS', payload: {isSaved: true, val} })
   }
 
-  componentDidMount() {
-    const data = JSON.parse(localStorage.getItem('savedReports')) || []
-    const tagsTemp = this.getTags(data)
-    this.setState({
-      reports: data,
-      filteredReports: data,
-      tags: tagsTemp,
-    })
+  const changeCurrent = (current) => {
+    dispatch({ type: 'CHANGE_CURRENT_PAGINATION', payload: current })
   }
 
-  getTags(arr) {
-    const arrTags = []
-      arr.forEach( el => {
-        el.tags.forEach( t => arrTags.push(t))
-      })
-      return [...new Set(arrTags)]
-  }
-
-  changeFilter = val => {
-    const reports = this.state.reports
-    const filteredReports = val ? reports.filter( r => r.tags.includes(val)) : reports
-    this.setState({ 
-      current: 1,
-      filteredReports
-    })
-  }
-
-  changeCurrentPage = current => {
-    this.setState({ current })
-  }
-
-  render() {
-    const { state: { tags, filteredReports, current }, changeFilter, changeCurrentPage } = this
-    return (
-      <Fragment>
-        <Filter tags={ tags } event={ changeFilter }/>
-        <ReportsList arrReports={ filteredReports } current={ current }/>
-        <Pag 
-          total={ filteredReports.length }
-          changeCurrent={ changeCurrentPage }
-          current={ current }
-        />
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <Filter tags={ sTags } event={ changeFilter }/>
+      <ReportsList arrReports={ sFilteredReports } current={ current }/>
+      <Pag 
+        total={ sFilteredReports.length }
+        changeCurrent={ changeCurrent }
+        current={ current }
+      />
+    </Fragment>
+  )
 }
 
 export default SavedReports

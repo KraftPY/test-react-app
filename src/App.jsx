@@ -9,7 +9,11 @@ import { getReportsFromApi } from './store/asyncActions'
 
 function App() {
   const dispatch = useDispatch()
+
+  // init app
   dispatch(getReportsFromApi())
+  dispatch({ type: 'GET_SAVED_REPORTS'})
+
   return (
     <div className="App">
       <Navbar/>
