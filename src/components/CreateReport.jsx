@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, Typography  } from 'antd'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
+import { createNewId, parseTags } from '../services/reportService'
 
 const { Title } = Typography
 const layout = {
@@ -23,22 +24,17 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 function CreateReport() {
-  const { reports, savedReports } = useSelector(state => state.reports)
+  const { reports, sReports } = useSelector(state => state.reports)
   const dispatch = useDispatch();
   const [form] = Form.useForm()
 
   const onFinish = ({ title, tags, description }) => {
-    let parseTags = tags.replace(/ +/g, ' ').trim().split(/,|\s/)
-    parseTags = parseTags.filter( t => t !== '')
-    let id = 0
-    let isNewId = false
-    do {
-      id++
-      // eslint-disable-next-line
-      isNewId = !savedReports.find( r => r.id === id)
-      isNewId = !reports.find( r => r.id === id)
-    } while (!isNewId)
-    const newReport = { id, title, tags: parseTags, description}
+    const newReport = { 
+      id: createNewId(reports, sReports),
+      title,
+      tags: parseTags(tags),
+      description
+    }
 
     dispatch({ type: 'SAVE_REPORT', payload: newReport })
     form.resetFields();

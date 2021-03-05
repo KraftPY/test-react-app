@@ -1,41 +1,51 @@
-import React, { Fragment } from 'react'
-import ReportsList from '../components/ReportsList/ReporstList'
-import Pag from '../components/Pagination/Pagination'
-import Filter from '../components/Filter/Filter'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { Fragment, useEffect, useState } from 'react'
+import ReportsList from './ReporstList'
+import Pag from './Pagination'
+import Filter from './Filter'
+import { useSelector } from 'react-redux'
+import { concatTagsArrays } from '../services/reportService'
+import { useLocation } from 'react-router-dom'
 
 
 function Reports() {
-  const { filteredReports, tags, current } = useSelector(state => state.reports)
-  const dispatch = useDispatch()
+  const { pathname } = useLocation()
+  const { reports, sReports } = useSelector(state => state.reports)
+  const arrReports = pathname === '/' ? reports : sReports
+  const [ current, setCurrent ] = useState(1)
+  const [ filReports, setFilReports ] = useState([])
+  const [ tags, setTags ] = useState([])
 
-  const saveReport = (report) => {
-    dispatch({ type: 'SAVE_REPORT', payload: report })
-  }
+  useEffect(() =>{
+    setFilReports(() => arrReports)
+    setTags(() => concatTagsArrays(arrReports))
+    setCurrent(1)
+  }, [ arrReports, pathname ])
 
   const changeFilter = (val) => {
-    dispatch({ type: 'FILTER_REPORTS', payload: { isSaved: false, val } })
-  }
-
-  const changeCurrent = (current) => {
-    dispatch({ type: 'CHANGE_CURRENT_PAGINATION', payload: current })
+    setFilReports(() =>{
+      if (val) {
+        return arrReports.filter( r => r.tags.includes(val))
+      } else {
+        return arrReports
+      }
+    })
+    setCurrent(1)
   }
 
   return (
-      <Fragment>
-        <Filter tags={ tags } event={ changeFilter }/>
-        <ReportsList
-          arrReports={ filteredReports }
-          current={ current }
-          saveRep={ saveReport }
-        />
-        <Pag 
-          total={ filteredReports.length }
-          changeCurrent={ changeCurrent }
-          current={ current }
-        />
-      </Fragment>
-    )
+    <Fragment>
+      <Filter tags={ tags } eventChange={ changeFilter }/>
+      <ReportsList
+        arrReports={ filReports }
+        current={ current }
+      />
+      <Pag 
+        total={ filReports.length }
+        changeCurrent={ (cur) => setCurrent(() => cur) }
+        current={ current }
+      />
+    </Fragment>
+  )
 
 }
 

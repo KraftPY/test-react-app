@@ -1,8 +1,18 @@
 import React from 'react'
 import './ReportItem.css'
 import { Button, Card, Row, Modal } from 'antd'
+import { useDispatch } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 
-export default function ReportItem({ report, saveRep }) {
+
+export default function ReportItem({ report }) {
+  const dispatch = useDispatch()
+  const { pathname } = useLocation()
+
+  const saveReport = () => {
+    dispatch({ type: 'SAVE_REPORT', payload: report })
+  }
+
   const openDetails = (report) => {
     Modal.info({
       title: report.title,
@@ -24,7 +34,7 @@ export default function ReportItem({ report, saveRep }) {
       </div>
       <Row justify="space-around" style={{ marginTop: '1rem' }}>
         <Button type="primary" onClick={ () => openDetails(report) }>Details</Button>
-        <Button type="primary" disabled={ saveRep === null } onClick={ () => saveRep(report) }>Save</Button>
+        <Button type="primary" disabled={ pathname !== '/' } onClick={ saveReport }>Save</Button>
       </Row>
     </Card>
   )
