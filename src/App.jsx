@@ -1,8 +1,5 @@
 import React from 'react'
-import Reports from './components/Reports'
-// import SavedReports from './components/SavedReports'
-import CreateReport from './components/CreateReport'
-import { Switch, Route } from 'react-router-dom'
+import AppRouter from './router'
 import Navbar from './components/Navbar'
 import { useDispatch } from 'react-redux'
 import { getReportsFromApi } from './store/asyncActions'
@@ -16,12 +13,8 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar/>
-      <Switch>
-        <Route exact path="/" component={ Reports }/>
-        <Route exact path="/saved-reports" component={ Reports }/>
-        <Route exact path="/create-report" component={ CreateReport }/>
-      </Switch>
+      <Navbar />
+      <AppRouter />
     </div>
   )
 }
