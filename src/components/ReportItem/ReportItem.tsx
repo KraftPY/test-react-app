@@ -3,9 +3,13 @@ import './ReportItem.css'
 import { Button, Card, Row, Modal } from 'antd'
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import { IReport } from '../../interfaces'
 
+type RepItemProps = {
+  report: IReport
+}
 
-export default function ReportItem({ report }) {
+export default function ReportItem({ report }: RepItemProps) {
   const dispatch = useDispatch()
   const { pathname } = useLocation()
 
@@ -13,7 +17,7 @@ export default function ReportItem({ report }) {
     dispatch({ type: 'SAVE_REPORT', payload: report })
   }
 
-  const openDetails = (report) => {
+  const openDetails = (report: IReport) => {
     Modal.info({
       title: report.title,
       content: (

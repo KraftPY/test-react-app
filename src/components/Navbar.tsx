@@ -2,7 +2,12 @@ import React from 'react'
 import { Menu } from 'antd'
 import { useHistory } from 'react-router-dom'
 
-const menu = [
+type routeLink = {
+  name: string,
+  path: string
+}
+
+const menu: routeLink[] = [
   { name: 'Reports', path: '/'},
   { name: 'Saved reports', path: '/saved-reports'},
   { name: 'Create report', path: '/create-report'},
@@ -11,7 +16,7 @@ const menu = [
 export default function Navbar() {
   const history = useHistory()
 
-  function eventClick({ key }) {
+  function eventClick({ key }: any) {
     const path = menu[key - 1].path
     history.push(path)
   }

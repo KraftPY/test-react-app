@@ -1,7 +1,14 @@
 import React from 'react'
 import { Pagination } from 'antd';
 
-export default function Pag({ total, current, changeCurrent }) {
+type PagProps = {
+  total: number,
+  current: number,
+  changeCurrent(val: number): void
+}
+
+
+export default function Pag({ total, current, changeCurrent }: PagProps) {
   return (
     <Pagination 
       style={{ marginTop: '2rem', textAlign: 'center'}}

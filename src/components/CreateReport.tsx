@@ -2,6 +2,14 @@ import React from 'react'
 import { Form, Input, Button, Typography  } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewId, parseTags } from '../services/reportService'
+import { RootState } from '../store/rootReducer'
+import { IReport } from '../store/reports/types'
+
+type formType = {
+  title: string,
+  tags: string,
+  description: string
+}
 
 const { Title } = Typography
 const layout = {
@@ -24,12 +32,12 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 function CreateReport() {
-  const { reports, sReports } = useSelector(state => state.reports)
+  const { reports, sReports } = useSelector((state: RootState) => state.reports)
   const dispatch = useDispatch();
   const [form] = Form.useForm()
 
-  const onFinish = ({ title, tags, description }) => {
-    const newReport = { 
+  const onFinish = ({ title, tags, description }: formType) => {
+    const newReport: IReport = { 
       id: createNewId(reports, sReports),
       title,
       tags: parseTags(tags),
@@ -47,14 +55,15 @@ function CreateReport() {
       onFinish={onFinish}
       validateMessages={validateMessages}
       labelAlign="left"
-      align="center"
+      // style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}
+      // align="center"
       form={form}
     >
       <Title level={3} style={{ margin: '2% 0' }}>Create report</Title>
       <Form.Item
         name={['title']}
         label="Title"
-        justify="center"
+        // justify="center"
         rules={[
           {
             required: true,
@@ -66,7 +75,7 @@ function CreateReport() {
       <Form.Item
         name={['tags']}
         label="Tags"
-        justify="center"
+        // justify="center"
         rules={[
           {
             required: true,
@@ -78,7 +87,7 @@ function CreateReport() {
       <Form.Item 
         name={[ 'description']}
         label="Description"
-        justify="center"
+        // justify="center"
         rules={[
           {
             required: true,

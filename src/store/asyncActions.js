@@ -5,9 +5,7 @@ export function getReportsFromApi() {
     getReports().then( res => {
       dispatch({
         type: 'GET_API_REPORTS',
-        payload: {
-          reports: res
-        }
+        payload: res
       })
     })
   }

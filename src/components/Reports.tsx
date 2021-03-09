@@ -1,19 +1,20 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReportsList from './ReporstList'
 import Pag from './Pagination'
 import Filter from './Filter'
 import { useSelector } from 'react-redux'
 import { concatTagsArrays } from '../services/reportService'
 import { useLocation } from 'react-router-dom'
+import { IReport } from '../interfaces'
+import { RootState } from '../store/rootReducer'
 
-
-function Reports() {
+export default function Reports() {
   const { pathname } = useLocation()
-  const { reports, sReports } = useSelector(state => state.reports)
+  const { reports, sReports } = useSelector((state: RootState) => state.reports)
   const arrReports = pathname === '/' ? reports : sReports
   const [ current, setCurrent ] = useState(1)
-  const [ filReports, setFilReports ] = useState([])
-  const [ tags, setTags ] = useState([])
+  const [ filReports, setFilReports ] = useState<IReport[]>([])
+  const [ tags, setTags ] = useState<string[]>([])
 
   useEffect(() =>{
     setFilReports(() => arrReports)
@@ -21,7 +22,7 @@ function Reports() {
     setCurrent(1)
   }, [ arrReports, pathname ])
 
-  const changeFilter = (val) => {
+  const changeFilter = (val: string) => {
     setFilReports(() =>{
       if (val) {
         return arrReports.filter( r => r.tags.includes(val))
@@ -33,7 +34,7 @@ function Reports() {
   }
 
   return (
-    <Fragment>
+    <>
       <Filter tags={ tags } eventChange={ changeFilter }/>
       <ReportsList
         arrReports={ filReports }
@@ -41,12 +42,10 @@ function Reports() {
       />
       <Pag 
         total={ filReports.length }
-        changeCurrent={ (cur) => setCurrent(() => cur) }
+        changeCurrent={ (cur: number) => setCurrent(() => cur) }
         current={ current }
       />
-    </Fragment>
+    </>
   )
 
 }
-
-export default Reports

@@ -21,7 +21,7 @@ const routes = [
 export default function appRouter() {
   return (
     <Switch>
-      { routes.map( r => <Route exact path={ r.path } component={ r.component } />) }
+      { routes.map( r => <Route exact path={ r.path } component={ r.component } key={ r.path }/>) }
     </Switch>
   )
 }
