@@ -5,12 +5,6 @@ import { createNewId, parseTags } from '../services/reportService'
 import { RootState } from '../store/rootReducer'
 import { IReport } from '../store/reports/types'
 
-type formType = {
-  title: string,
-  tags: string,
-  description: string
-}
-
 const { Title } = Typography
 const layout = {
   labelCol: {
@@ -31,12 +25,12 @@ const validateMessages = {
 
 /* eslint-enable no-template-curly-in-string */
 
-function CreateReport() {
+const CreateReport = () => {
   const { reports, sReports } = useSelector((state: RootState) => state.reports)
   const dispatch = useDispatch();
   const [form] = Form.useForm()
 
-  const onFinish = ({ title, tags, description }: formType) => {
+  const onFinish = ({ title, tags, description }: any) => {
     const newReport: IReport = { 
       id: createNewId(reports, sReports),
       title,

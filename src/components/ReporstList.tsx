@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
 import ReportItem from './ReportItem/ReportItem'
 import { Col, Row } from 'antd'
 import { IReport } from '../interfaces'
 
-type IProps = {
+interface IProps {
   arrReports: Array<IReport>,
   current: number
 }
 
-const ReportsList =({ arrReports, current }: IProps) => {
+const ReportsList:FC<IProps> = ({ arrReports, current }) => {
   return (
     <Row justify="center" gutter={[20, 20]} style={{ margin: "0"}}>
       { arrReports.map( (el, i) => {

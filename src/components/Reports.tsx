@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom'
 import { IReport } from '../interfaces'
 import { RootState } from '../store/rootReducer'
 
-export default function Reports() {
+const Reports = () => {
   const { pathname } = useLocation()
   const { reports, sReports } = useSelector((state: RootState) => state.reports)
   const arrReports = pathname === '/' ? reports : sReports
@@ -49,3 +49,5 @@ export default function Reports() {
   )
 
 }
+
+export default Reports

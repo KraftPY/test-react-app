@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { FC } from 'react'
 import './ReportItem.css'
 import { Button, Card, Row, Modal } from 'antd'
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { IReport } from '../../interfaces'
 
-type RepItemProps = {
+interface IRepItemProps {
   report: IReport
 }
 
-export default function ReportItem({ report }: RepItemProps) {
+const ReportItem:FC<IRepItemProps> = ({ report }) => {
   const dispatch = useDispatch()
   const { pathname } = useLocation()
 
@@ -43,3 +43,5 @@ export default function ReportItem({ report }: RepItemProps) {
     </Card>
   )
 }
+
+export default ReportItem

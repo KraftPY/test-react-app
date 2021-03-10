@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { Select, Divider, Form } from 'antd'
 import { useLocation } from 'react-router-dom'
 
-type FilterProps = {
+interface IFilterProps {
   tags: string[],
   eventChange(val: string): void
 }
 
-export default function Filter({ tags, eventChange }: FilterProps) {
+const Filter:FC<IFilterProps> = ({ tags, eventChange }) => {
   const [form] = Form.useForm()
   const { pathname } = useLocation()
 
@@ -35,3 +35,5 @@ export default function Filter({ tags, eventChange }: FilterProps) {
     </>
   )
 }
+
+export default Filter

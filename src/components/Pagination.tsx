@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Pagination } from 'antd';
 
-type PagProps = {
+interface IPagProps {
   total: number,
   current: number,
   changeCurrent(val: number): void
 }
 
 
-export default function Pag({ total, current, changeCurrent }: PagProps) {
+ const Pag:FC<IPagProps> = ({ total, current, changeCurrent }) => {
   return (
     <Pagination 
       style={{ marginTop: '2rem', textAlign: 'center'}}
@@ -19,3 +19,5 @@ export default function Pag({ total, current, changeCurrent }: PagProps) {
       showSizeChanger={false}
     />)
 }
+
+export default Pag

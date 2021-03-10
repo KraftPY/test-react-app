@@ -2,18 +2,18 @@ import React from 'react'
 import { Menu } from 'antd'
 import { useHistory } from 'react-router-dom'
 
-type routeLink = {
+interface IRouteLink {
   name: string,
   path: string
 }
 
-const menu: routeLink[] = [
+const menu: IRouteLink[] = [
   { name: 'Reports', path: '/'},
   { name: 'Saved reports', path: '/saved-reports'},
   { name: 'Create report', path: '/create-report'},
 ]
 
-export default function Navbar() {
+const Navbar = () => {
   const history = useHistory()
 
   function eventClick({ key }: any) {
@@ -37,3 +37,5 @@ export default function Navbar() {
     </Menu>
   )
 }
+
+export default Navbar
