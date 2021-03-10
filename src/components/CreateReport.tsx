@@ -55,15 +55,15 @@ function CreateReport() {
       onFinish={onFinish}
       validateMessages={validateMessages}
       labelAlign="left"
-      // style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}
-      // align="center"
+      style={{ textAlign: 'center' }}
       form={form}
+      size="middle"
     >
       <Title level={3} style={{ margin: '2% 0' }}>Create report</Title>
       <Form.Item
         name={['title']}
         label="Title"
-        // justify="center"
+        style={{ justifyContent: 'center' }}
         rules={[
           {
             required: true,
@@ -75,7 +75,7 @@ function CreateReport() {
       <Form.Item
         name={['tags']}
         label="Tags"
-        // justify="center"
+        style={{ justifyContent: 'center' }}
         rules={[
           {
             required: true,
@@ -87,7 +87,7 @@ function CreateReport() {
       <Form.Item 
         name={[ 'description']}
         label="Description"
-        // justify="center"
+        style={{ justifyContent: 'center' }}
         rules={[
           {
             required: true,
