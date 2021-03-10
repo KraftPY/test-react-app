@@ -5,8 +5,8 @@ import Filter from './Filter'
 import { useSelector } from 'react-redux'
 import { concatTagsArrays } from '../services/reportService'
 import { useLocation } from 'react-router-dom'
-import { IReport } from '../interfaces'
 import { RootState } from '../store/rootReducer'
+import { IReport } from '../store/reports/types'
 
 const Reports = () => {
   const { pathname } = useLocation()

@@ -1,3 +1,5 @@
+import { ThunkAction } from "redux-thunk"
+
 export interface IReport {
   id: number,
   title: string,
@@ -35,3 +37,5 @@ interface SaveReportAction {
 
 
 export type ReportsActionTypes = GetApiReportsAction | GetSavedReportsAction | SaveReportAction
+
+export type ThunkType = ThunkAction<void, ReportsState, unknown, ReportsActionTypes>

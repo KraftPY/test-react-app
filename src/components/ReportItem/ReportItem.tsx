@@ -3,7 +3,8 @@ import './ReportItem.css'
 import { Button, Card, Row, Modal } from 'antd'
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { IReport } from '../../interfaces'
+import { saveReport } from '../../store/reports/actions'
+import { IReport } from '../../store/reports/types'
 
 interface IRepItemProps {
   report: IReport
@@ -13,8 +14,8 @@ const ReportItem:FC<IRepItemProps> = ({ report }) => {
   const dispatch = useDispatch()
   const { pathname } = useLocation()
 
-  const saveReport = () => {
-    dispatch({ type: 'SAVE_REPORT', payload: report })
+  const sReport = () => {
+    dispatch(saveReport(report))
   }
 
   const openDetails = (report: IReport) => {
@@ -38,7 +39,7 @@ const ReportItem:FC<IRepItemProps> = ({ report }) => {
       </div>
       <Row justify="space-around" style={{ marginTop: '1rem' }}>
         <Button type="primary" onClick={ () => openDetails(report) }>Details</Button>
-        <Button type="primary" disabled={ pathname !== '/' } onClick={ saveReport }>Save</Button>
+        <Button type="primary" disabled={ pathname !== '/' } onClick={ sReport }>Save</Button>
       </Row>
     </Card>
   )

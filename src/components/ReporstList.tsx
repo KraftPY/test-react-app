@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import ReportItem from './ReportItem/ReportItem'
 import { Col, Row } from 'antd'
-import { IReport } from '../interfaces'
+import { IReport } from '../store/reports/types'
 
 interface IProps {
   arrReports: Array<IReport>,

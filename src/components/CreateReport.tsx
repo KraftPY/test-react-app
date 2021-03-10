@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createNewId, parseTags } from '../services/reportService'
 import { RootState } from '../store/rootReducer'
 import { IReport } from '../store/reports/types'
+import { saveReport } from '../store/reports/actions'
 
 const { Title } = Typography
 const layout = {
@@ -16,13 +17,11 @@ const layout = {
     md: 7,
   },
 };
-/* eslint-disable no-template-curly-in-string */
 
+/* eslint-disable no-template-curly-in-string */
 const validateMessages = {
   required: '${label} is required!',
 };
-
-
 /* eslint-enable no-template-curly-in-string */
 
 const CreateReport = () => {
@@ -38,7 +37,7 @@ const CreateReport = () => {
       description
     }
 
-    dispatch({ type: 'SAVE_REPORT', payload: newReport })
+    dispatch(saveReport(newReport))
     form.resetFields();
   };
 

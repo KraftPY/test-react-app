@@ -7,19 +7,19 @@ export function concatTagsArrays(arrReports: IReport[]): string[] {
 }
 
 export function parseTags(strTags: string): string[] {
-  let parseTags = strTags.replace(/ +/g, ' ').trim().split(/,|\s/)
+  let parseTags: string[] = strTags.replace(/ +/g, ' ').trim().split(/,|\s/)
   return parseTags.filter( t => t !== '')
 }
 
 export function createNewId(reports: IReport[], sReports: IReport[]): number {
-  let id = 0
-  let isNewId = false
+  let id: number = 0
+  let isNewId: boolean = true
+
+  const checkID = (): boolean => !!(sReports.find( r => r.id === id) || reports.find( r => r.id === id))
+
   do {
     id++
-    // eslint-disable-next-line
-    isNewId = !sReports.find( r => r.id === id)
-    // eslint-disable-next-line
-    isNewId = !reports.find( r => r.id === id)
-  } while (!isNewId)
+    isNewId = checkID()
+  } while (isNewId)
   return id
 }
